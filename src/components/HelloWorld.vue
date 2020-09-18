@@ -4,58 +4,35 @@
 
     <h2>Best Bear quiz results:</h2>
 
-    <div class="bears" v-for="element in frienderly" :key="element.votes">
+   <!--  <div class="bears" v-for="element in frienderly" :key="element.votes">
         <h2>TOTAL: </h2>
         <h1> {{element.option}}</h1>
         <p>Freinderly: {{element.votes}}</p>
         <p v-for="vote in connectMeVotes" :key="vote">ConnectMe: {{vote}}</p> 
-     <!--  <div v-for="el in connectMe" :key="el.option"> 
-        <p>Connectme: {{el.votes}}</p>
-      </div> -->
-    </div>
-    <!--  <p v-for="vote in votes" :key="vote">ConnectMe: {{vote}}</p> -->
-
-<!--     <div v-for="name in getNamesInFrienderly" :key="name">
-       <p>{{name}}</p>
-       <p v-for="vote in getVotesInFrienderly" :key="vote">{{vote}}</p>
     </div> -->
-      
+  
+  <div class="wrapperBearsnames">
+    <div v-for="name in getNamesInFrienderly" :key="name" class="bearsNames">
+       <p>{{name}}</p>
+    </div>
+  </div>
+
+  <div>
     
+  </div>
+
+  <div  class="wrapperFrienderlyVotes">
+    <div v-for="vote in getVotesInFrienderly" :key="vote">
+      <p>Frienderly: {{vote}}</p>
+    </div>
+  </div>  
     
-
-
-
-        <!--      <div class="grizzly">
-                <h1>Grizzly</h1>
-                <h2>TOTAL: </h2>
-                <p>QuizPaw: </p>
-                <p>Frienderly: {{ this.grizzlyTotal}} </p>
-                <p>ConnectMe: </p>
-              </div>
-
-              <div class="panda">
-                <h1>Panda</h1>
-                <h2>TOTAL: </h2>
-                <p>QuizPaw: </p>
-                <p>Frienderly: </p>
-                <p>ConnectMe: </p>
-              </div>
-
-              <div class="polar">
-                <h1>Polar</h1>
-                <h2>TOTAL: </h2>
-                <p>QuizPaw: </p>
-                <p>Frienderly: </p>
-                <p>ConnectMe: </p>
-              </div>
-
-              <div class="BlackBear">
-                <h1>Black Bear</h1>
-                <h2>TOTAL: </h2>
-                <p>QuizPaw: </p>
-                <p>Frienderly: </p>
-                <p>ConnectMe: </p>
-              </div> -->
+  <div class="wrapperConnectMeVotes">
+     <div v-for="el in getVotesInConnectMe" :key="el">
+      <p>ConnectMe: {{el}}</p>
+    </div>
+  </div>
+   
   
   </div>
 </template>
@@ -111,6 +88,7 @@ export default {
       },
       votes: [],
       bearsNames: [],
+      votesConnectMe: []
     }
   },
   methods: {
@@ -118,15 +96,15 @@ export default {
   },
 
   computed: {
-    connectMeVotes() {
+ /*    connectMeVotes() {
         this.connectMe.forEach(element => {
           this.votes.push(element.votes);
           console.log("votesss", this.votes)
         return this.votes
       })
       return this.votes
-    },
- /*    getNamesInFrienderly() {
+    }, */
+    getNamesInFrienderly() {
       this.frienderly.filter(element => {
         this.bearsNames.push(element.option);
         return this.bearsNames
@@ -140,7 +118,14 @@ export default {
         return this.votes
       })
       return this.votes
-    } */
+    },
+    getVotesInConnectMe() {
+       this.connectMe.filter(element => {
+        this.votesConnectMe.push(element.votes);
+        return this.votesConnectMe
+      })
+      return this.votesConnectMe
+    }
   }
 }
 </script>
@@ -148,9 +133,33 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.bears {
+/* .bears {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+} */
+
+.wrapperBearsnames {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.bearsNames {
+  width: 100px;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid lightcoral;
+}
+
+.wrapperFrienderlyVotes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.wrapperConnectMeVotes {
+  display: flex;
+  flex-direction: row;
   justify-content: space-around;
 }
 
