@@ -3,41 +3,40 @@
     <h1>WELCOME TO QUIZPAW!</h1>
 
     <h2>Best Bear quiz results:</h2>
-
-   <!--  <div class="bears" v-for="element in frienderly" :key="element.votes">
-        <h2>TOTAL: </h2>
-        <h1> {{element.option}}</h1>
-        <p>Freinderly: {{element.votes}}</p>
-        <p v-for="vote in connectMeVotes" :key="vote">ConnectMe: {{vote}}</p> 
-    </div> -->
   
-  <div class="wrapperBearsnames">
-    <div v-for="name in getNamesInFrienderly" :key="name" class="bearsNames">
-       <p>{{name}}</p>
-       <p>TOTAL: </p>
+    <div class="wrapperBearsnames">
+      <div v-for="name in getNamesInFrienderly" :key="name" class="bearsNames">
+        <p>{{name}}</p>
+      </div>
     </div>
-  </div>
 
-  <div class="wrapperQuizPawResults">
-    <p> QuizPaw: {{quizPaw.grizzly}}</p>
-    <p> QuizPaw: {{quizPaw.panda}}</p>
-    <p> QuizPaw: {{quizPaw.polar}}</p>
-    <p> QuizPaw: {{quizPaw.blackBear}}</p>    
-  </div>
-
-  <div  class="wrapperFrienderlyVotes">
-    <div v-for="vote in getVotesInFrienderly" :key="vote">
-      <p>Frienderly: {{vote}}</p>
+    <div class="wrapperTotals">
+      <p>TOTAL GRIZZLY: {{totalForGrizzly}}</p>
+      <p>TOTAL PANDA: {{totalForPanda}}</p>
+      <p>TOTAL POLAR: {{totalForPolar}}</p>
+      <p>TOTAL BLACK BEAR: {{totalForBlackBear}}</p>
     </div>
-  </div>  
+
+    <div class="wrapperQuizPawResults">
+      <p> QuizPaw: {{quizPaw.grizzly}}</p>
+      <p> QuizPaw: {{quizPaw.panda}}</p>
+      <p> QuizPaw: {{quizPaw.polar}}</p>
+      <p> QuizPaw: {{quizPaw.blackBear}}</p>    
+    </div>
+
+    <div  class="wrapperFrienderlyVotes">
+      <div v-for="vote in getVotesInFrienderly" :key="vote">
+        <p>Frienderly: {{vote}}</p>
+      </div>
+    </div>  
+      
+    <div class="wrapperConnectMeVotes">
+      <div v-for="el in getVotesInConnectMe" :key="el">
+        <p>ConnectMe: {{el}}</p>
+      </div>
+    </div>
     
-  <div class="wrapperConnectMeVotes">
-     <div v-for="el in getVotesInConnectMe" :key="el">
-      <p>ConnectMe: {{el}}</p>
-    </div>
-  </div>
-   
-  
+    
   </div>
 </template>
 
@@ -92,7 +91,8 @@ export default {
       },
       votes: [],
       bearsNames: [],
-      votesConnectMe: []
+      votesConnectMe: [],
+      totalResultGrizzly: null,
     }
   },
   methods: {
@@ -100,14 +100,6 @@ export default {
   },
 
   computed: {
- /*    connectMeVotes() {
-        this.connectMe.forEach(element => {
-          this.votes.push(element.votes);
-          console.log("votesss", this.votes)
-        return this.votes
-      })
-      return this.votes
-    }, */
     getNamesInFrienderly() {
       this.frienderly.filter(element => {
         this.bearsNames.push(element.option);
@@ -129,7 +121,25 @@ export default {
         return this.votesConnectMe
       })
       return this.votesConnectMe
-    }
+    },
+
+    totalForGrizzly() {
+      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly 
+    },
+
+    totalForPanda() {
+       return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
+    },
+
+    totalForPolar() {
+       return this.frienderly[2].votes + this.connectMe[2].votes + this.quizPaw.polar 
+    },
+
+    totalForBlackBear() {
+       return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
+    },
+
+
   }
 }
 </script>
@@ -152,6 +162,12 @@ export default {
   width: 100px;
   display: flex;
   flex-direction: column;
+}
+
+.wrapperTotals {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .wrapperQuizPawResults {
