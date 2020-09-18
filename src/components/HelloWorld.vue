@@ -4,12 +4,14 @@
 
     <h2>Best Bear quiz results:</h2>
   
-    <div class="wrapperBearsnames">
-      <div v-for="name in getNamesInFrienderly" :key="name" class="bearsNames">
-        <p>{{name}}</p>
-      </div>
+    
+    <div  class="bearsNames">
+      <p @click="addAVote">{{this.frienderly[0].option}}</p>
+      <p>{{this.frienderly[1].option}}</p>
+      <p>{{this.frienderly[2].option}}</p>
+      <p>{{this.frienderly[3].option}}</p>
     </div>
-
+   
     <div class="wrapperTotals">
       <p>TOTAL GRIZZLY: {{totalForGrizzly}}</p>
       <p>TOTAL PANDA: {{totalForPanda}}</p>
@@ -50,14 +52,17 @@ export default {
           option:"Grizzly",
           votes: 201
         },
+
         {
           option:"Panda",
           votes: 195
         },
+
         {
           option:"Polar",
           votes: 304
         },
+
         {
           option: "Black Bear",
           votes: 236
@@ -89,14 +94,20 @@ export default {
         polar: 237,
         blackBear: 161
       },
+      
       votes: [],
       bearsNames: [],
       votesConnectMe: [],
-      totalResultGrizzly: null,
+      addVoteGrizzly: null,
     }
   },
   methods: {
-
+    addAVote() {
+      console.log("I workkkkk")
+     
+     
+     return this.totalForGrizzly++
+    }
   },
 
   computed: {
@@ -123,9 +134,20 @@ export default {
       return this.votesConnectMe
     },
 
-    totalForGrizzly() {
-      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly 
+    totalForGrizzly: {
+      get() {
+         return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
+      },
+
+      set(newValue) {
+        console.log(newValue)
+        return newValue
+      }
     },
+
+/*     totalForGrizzly() {
+         return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
+    }, */
 
     totalForPanda() {
        return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
@@ -153,15 +175,10 @@ export default {
   justify-content: space-around;
 } */
 
-.wrapperBearsnames {
+.bearsNames {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
-.bearsNames {
-  width: 100px;
-  display: flex;
-  flex-direction: column;
 }
 
 .wrapperTotals {
