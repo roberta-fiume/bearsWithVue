@@ -14,11 +14,15 @@
   <div class="wrapperBearsnames">
     <div v-for="name in getNamesInFrienderly" :key="name" class="bearsNames">
        <p>{{name}}</p>
+       <p>TOTAL: </p>
     </div>
   </div>
 
-  <div>
-    
+  <div class="wrapperQuizPawResults">
+    <p> QuizPaw: {{quizPaw.grizzly}}</p>
+    <p> QuizPaw: {{quizPaw.panda}}</p>
+    <p> QuizPaw: {{quizPaw.polar}}</p>
+    <p> QuizPaw: {{quizPaw.blackBear}}</p>    
   </div>
 
   <div  class="wrapperFrienderlyVotes">
@@ -147,8 +151,13 @@ export default {
 .bearsNames {
   width: 100px;
   display: flex;
+  flex-direction: column;
+}
+
+.wrapperQuizPawResults {
+  display: flex;
   flex-direction: row;
-  border: 2px solid lightcoral;
+  justify-content: space-around;
 }
 
 .wrapperFrienderlyVotes {
