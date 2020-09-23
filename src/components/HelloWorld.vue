@@ -94,21 +94,17 @@ export default {
         polar: 237,
         blackBear: 161
       },
-      
+
       votes: [],
       bearsNames: [],
       votesConnectMe: [],
-      addVoteGrizzly: null,
+      counter: 1,
+      finalTotal: null
+      
     }
   },
-  methods: {
-    addAVote() {
-      console.log("I workkkkk")
-     
-     
-     return this.totalForGrizzly++
-    }
-  },
+
+
 
   computed: {
     getNamesInFrienderly() {
@@ -134,20 +130,27 @@ export default {
       return this.votesConnectMe
     },
 
-    totalForGrizzly: {
-      get() {
-         return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
-      },
+    totalForGrizzly() {
+        
+        return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly;
+         
 
-      set(newValue) {
-        console.log(newValue)
-        return newValue
-      }
     },
 
-/*     totalForGrizzly() {
-         return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
+ /*    totalForGrizzly: {
+        get() {
+          console.log("I'm calleddd gett")
+            return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
+        },
+
+        set(newValue) {
+          console.log("I'm calleddd settt")
+          newValue = this.finalTotal
+          console.log("new increased value", newValue) 
+          return newValue
+       } 
     }, */
+        
 
     totalForPanda() {
        return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
@@ -160,9 +163,24 @@ export default {
     totalForBlackBear() {
        return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
     },
+  },
+
+    methods: {
+      addAVote() {
+
+       let total1 = this.counter++;
+       console.log("counter added", total1);
+
+       this.finalTotal = total1 + this.totalForGrizzly;
+       console.log("computed changed", this.finalTotal);
+       
+     
+
+        return this.finalTotal
+      }
+  },
 
 
-  }
 }
 </script>
 
