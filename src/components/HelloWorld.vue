@@ -6,17 +6,17 @@
   
     
     <div  class="bearsNames">
-      <p @click="addAVote">{{this.frienderly[0].option}}</p>
-      <p>{{this.frienderly[1].option}}</p>
-      <p>{{this.frienderly[2].option}}</p>
-      <p>{{this.frienderly[3].option}}</p>
+      <p @click="addAVoteToGrizzly">{{this.frienderly[0].option}}</p>
+      <p @click="addAVoteToPanda">{{this.frienderly[1].option}}</p>
+      <p @click="addAVoteToPolar">{{this.frienderly[2].option}}</p>
+      <p @click="addAVoteToBlackBear">{{this.frienderly[3].option}}</p>
     </div>
    
     <div class="wrapperTotals">
-      <p>TOTAL GRIZZLY: {{resultGrizzly}} </p>
-      <p>TOTAL PANDA: {{totalForPanda}}</p>
-      <p>TOTAL POLAR: {{totalForPolar}}</p>
-      <p>TOTAL BLACK BEAR: {{totalForBlackBear}}</p>
+      <p>TOTAL GRIZZLY: {{finalResultGrizzly}} </p>
+      <p>TOTAL PANDA: {{finalResultPanda}}</p>
+      <p>TOTAL POLAR: {{finalResultPolar}}</p>
+      <p>TOTAL BLACK BEAR: {{finalResultBlackBear}}</p>
     </div>
 
     <div class="wrapperQuizPawResults">
@@ -101,17 +101,20 @@ export default {
       counter: 1,
       finalTotal: null,
       newComp: null,
-
-      resultGrizzly: null
+      finalResultGrizzly: null,
+      finalResultPanda: null,
+      finalResultPolar: null,
+      finalResultBlackBear: null
       
     }
 
   },
 
-  
     created() {
-      console.log("I'm createddd")
-      this.resultGrizzly = this.totalForGrizzly;
+      this.finalResultGrizzly = this.totalForGrizzly;
+      this.finalResultPanda = this.totalForPanda;
+      this.finalResultPolar = this.totalForPolar;
+      this.finalResultBlackBear = this.totalForBlackBear;
     },
 
   computed: {
@@ -139,43 +142,8 @@ export default {
     },
 
     totalForGrizzly() {
-
-       return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
-         
+      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
     },
-
-  /*   totalForGrizzly: {
-        get() {
-          console.log("I'm calleddd gett")
-            return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
-        },
-
-        set(newValue) {
-           console.log("I'm calleddd settt")
-            
-            console.log("new increased value", newValue) 
-            this.newComp = newValue
-          
-         
-          return newComp
-       } 
-    }, */
-
-       resultForGrizzly: {
-        get() {
-          console.log("I'm calleddd get result")
-            return  this.resultGrizzly
-        },
-
-        set(newValue) {
-           console.log("I'm calleddd settt")
-            
-            console.log("new increased value", newValue) 
-            this.resultGrizzly = newValue;
-            console.log("result grizzly", this.resultGrizzly ) 
-       } 
-    }, 
-        
 
     totalForPanda() {
        return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
@@ -188,32 +156,72 @@ export default {
     totalForBlackBear() {
        return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
     },
+
+    
+    resultForGrizzly: {
+        get() {
+          console.log("I'm calleddd get result")
+            return  this.finalResultGrizzly
+        },
+
+        set(newValue) {
+            this.finalResultGrizzly = newValue;
+            console.log("result grizzly", this.finalResultGrizzly) 
+       } 
+    }, 
+
+    resultForPanda: {
+      get() {
+        console.log("I'm calleddd get result")
+          return  this.finalResultPanda
+      },
+
+      set(newValue) {
+          this.finalResultPanda = newValue;
+          console.log("result panda", this.finalResultPanda) 
+      } 
+    }, 
+
+    resultForPolar: {
+      get() {
+        console.log("I'm calleddd get result")
+          return  this.finalResultPolar
+      },
+
+      set(newValue) {
+          this.finalResultPolar = newValue;
+          console.log("result polar", this.finalResultPolar) 
+      } 
+    },
+    
+    resultForBlackBear: {
+      get() {
+        console.log("I'm calleddd get result")
+          return  this.finalResultBlackBear
+      },
+
+      set(newValue) {
+          this.finalResultBlackBear = newValue;
+          console.log("result black bear", this.finalResultBlackBear) 
+      } 
+    }, 
+    
   },
 
     methods: {
-      addAVote() {  
-     
-        this.resultGrizzly++;
-
-        console.log("result grizzly increaded:", this.resultGrizzly)
-
-        
-
-        /*  let total1 = this.counter++;
-        console.log("counter added", total1);
-
-        this.finalTotal = total1 + this.totalForGrizzly;
-        console.log("computed changed", this.finalTotal);
-
-        
-        this.totalForGrizzly = this.finalTotal;
-        console.log("computed changed in METHOD", this.totalForGrizzly) */
-
-      
-     
-
+      addAVoteToGrizzly() {  
+        this.finalResultGrizzly++;
+      },
+      addAVoteToPanda() {  
+        this.finalResultPanda++;
+      },
+      addAVoteToPolar() {  
+        this.finalResultPolar++;
+      },
+      addAVoteToBlackBear() {
+        this.finalResultBlackBear++;
       }
-  },
+    }
 
 
 }
@@ -221,12 +229,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-/* .bears {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-} */
 
 .bearsNames {
   display: flex;
