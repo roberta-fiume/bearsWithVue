@@ -5,14 +5,44 @@
     <h2>Best Bear quiz results:</h2>
   
     
-    <div  class="bearsNames">
+<!--     <div  class="bearsNames">
       <p @click="addAVoteToGrizzly">{{this.frienderly[0].option}}</p>
       <p @click="addAVoteToPanda">{{this.frienderly[1].option}}</p>
       <p @click="addAVoteToPolar">{{this.frienderly[2].option}}</p>
       <p @click="addAVoteToBlackBear">{{this.frienderly[3].option}}</p>
+    </div> -->
+
+    <div  class="bearsNames">
+      <p @click="addAVote(bearName.option)" v-for="bearName in frienderly" :key="bearName.option">{{bearName.option}}</p>
+    </div> 
+
+     <div  class="wrapperTotals">
+      <p> TOTAL GRIZZLY: </p>
+      <p> TOTAL PANDA: </p>
+      <p> TOTAL POLAR: </p>
+      <p> TOTAL BLACK BEAR: </p>
+    </div> 
+
+    <div class="wrapperQuizPawResults">
+      <p> QuizPaw: {{quizPaw.grizzly}}</p>
+      <p> QuizPaw: {{quizPaw.panda}}</p>
+      <p> QuizPaw: {{quizPaw.polar}}</p>
+      <p> QuizPaw: {{quizPaw.blackBear}}</p>    
+    </div>
+
+     <div  class="wrapperFrienderlyVotes">
+      <div v-for="vote in getVotesInFrienderly" :key="vote">
+        <p>Frienderly: {{vote}}</p>
+      </div>
+    </div>  
+      
+    <div class="wrapperConnectMeVotes">
+      <div v-for="el in getVotesInConnectMe" :key="el">
+        <p>ConnectMe: {{el}}</p>
+      </div>
     </div>
    
-    <div class="wrapperTotals">
+    <!-- <div class="wrapperTotals">
       <p>TOTAL GRIZZLY: {{finalResultGrizzly}} </p>
       <p>TOTAL PANDA: {{finalResultPanda}}</p>
       <p>TOTAL POLAR: {{finalResultPolar}}</p>
@@ -36,7 +66,7 @@
       <div v-for="el in getVotesInConnectMe" :key="el">
         <p>ConnectMe: {{el}}</p>
       </div>
-    </div>
+    </div -->
     
     
   </div>
@@ -98,34 +128,26 @@ export default {
       votes: [],
       bearsNames: [],
       votesConnectMe: [],
-      counter: 1,
-      finalTotal: null,
-      newComp: null,
-      finalResultGrizzly: null,
+      finalResult: null,
+  /*     finalResultGrizzly: null,
       finalResultPanda: null,
       finalResultPolar: null,
-      finalResultBlackBear: null
+      finalResultBlackBear: null */
       
     }
 
   },
 
     created() {
-      this.finalResultGrizzly = this.totalForGrizzly;
+      this.finalResult = this.total;
+     /*  this.finalResultGrizzly = this.totalForGrizzly;
       this.finalResultPanda = this.totalForPanda;
       this.finalResultPolar = this.totalForPolar;
-      this.finalResultBlackBear = this.totalForBlackBear;
+      this.finalResultBlackBear = this.totalForBlackBear; */
     },
 
   computed: {
-    getNamesInFrienderly() {
-      this.frienderly.filter(element => {
-        this.bearsNames.push(element.option);
-        return this.bearsNames
-      })
-      return this.bearsNames
-    },
-
+    
     getVotesInFrienderly() {
       this.frienderly.filter(element => {
         this.votes.push(element.votes);
@@ -141,7 +163,7 @@ export default {
       return this.votesConnectMe
     },
 
-    totalForGrizzly() {
+    /* totalForGrizzly() {
       return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
     },
 
@@ -204,12 +226,12 @@ export default {
           this.finalResultBlackBear = newValue;
           console.log("result black bear", this.finalResultBlackBear) 
       } 
-    }, 
+    },   */
     
   },
 
     methods: {
-      addAVoteToGrizzly() {  
+  /*     addAVoteToGrizzly() {  
         this.finalResultGrizzly++;
       },
       addAVoteToPanda() {  
@@ -220,6 +242,15 @@ export default {
       },
       addAVoteToBlackBear() {
         this.finalResultBlackBear++;
+      },
+ */
+      addAVote(element) {
+      
+        this.frienderly.forEach(element => {
+          console.log("element", element)
+        
+          this.finalResult++;
+        });
       }
     }
 
