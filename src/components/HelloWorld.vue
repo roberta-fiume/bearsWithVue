@@ -13,7 +13,7 @@
     </div>
    
     <div class="wrapperTotals">
-      <p>TOTAL GRIZZLY: {{totalForGrizzly}}</p>
+      <p>TOTAL GRIZZLY: {{resultGrizzly}} </p>
       <p>TOTAL PANDA: {{totalForPanda}}</p>
       <p>TOTAL POLAR: {{totalForPolar}}</p>
       <p>TOTAL BLACK BEAR: {{totalForBlackBear}}</p>
@@ -99,12 +99,20 @@ export default {
       bearsNames: [],
       votesConnectMe: [],
       counter: 1,
-      finalTotal: null
+      finalTotal: null,
+      newComp: null,
+
+      resultGrizzly: null
       
     }
+
   },
 
-
+  
+    created() {
+      console.log("I'm createddd")
+      this.resultGrizzly = this.totalForGrizzly;
+    },
 
   computed: {
     getNamesInFrienderly() {
@@ -131,25 +139,42 @@ export default {
     },
 
     totalForGrizzly() {
-        
-        return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly;
-         
 
+       return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
+         
     },
 
- /*    totalForGrizzly: {
+  /*   totalForGrizzly: {
         get() {
           console.log("I'm calleddd gett")
             return  this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly
         },
 
         set(newValue) {
-          console.log("I'm calleddd settt")
-          newValue = this.finalTotal
-          console.log("new increased value", newValue) 
-          return newValue
+           console.log("I'm calleddd settt")
+            
+            console.log("new increased value", newValue) 
+            this.newComp = newValue
+          
+         
+          return newComp
        } 
     }, */
+
+       resultForGrizzly: {
+        get() {
+          console.log("I'm calleddd get result")
+            return  this.resultGrizzly
+        },
+
+        set(newValue) {
+           console.log("I'm calleddd settt")
+            
+            console.log("new increased value", newValue) 
+            this.resultGrizzly = newValue;
+            console.log("result grizzly", this.resultGrizzly ) 
+       } 
+    }, 
         
 
     totalForPanda() {
@@ -166,17 +191,27 @@ export default {
   },
 
     methods: {
-      addAVote() {
+      addAVote() {  
+     
+        this.resultGrizzly++;
 
-       let total1 = this.counter++;
-       console.log("counter added", total1);
+        console.log("result grizzly increaded:", this.resultGrizzly)
 
-       this.finalTotal = total1 + this.totalForGrizzly;
-       console.log("computed changed", this.finalTotal);
-       
+        
+
+        /*  let total1 = this.counter++;
+        console.log("counter added", total1);
+
+        this.finalTotal = total1 + this.totalForGrizzly;
+        console.log("computed changed", this.finalTotal);
+
+        
+        this.totalForGrizzly = this.finalTotal;
+        console.log("computed changed in METHOD", this.totalForGrizzly) */
+
+      
      
 
-        return this.finalTotal
       }
   },
 
