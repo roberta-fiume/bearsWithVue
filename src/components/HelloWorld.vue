@@ -17,10 +17,10 @@
     </div> 
 
      <div  class="wrapperTotals">
-      <p> TOTAL GRIZZLY: </p>
-      <p> TOTAL PANDA: </p>
+      <p v-for="total in totals" :key="total.name"> TOTAL: {{total.total}}</p>
+    <!--   <p> TOTAL PANDA: </p>
       <p> TOTAL POLAR: </p>
-      <p> TOTAL BLACK BEAR: </p>
+      <p> TOTAL BLACK BEAR: </p> -->
     </div> 
 
     <div class="wrapperQuizPawResults">
@@ -129,6 +129,7 @@ export default {
       bearsNames: [],
       votesConnectMe: [],
       finalResult: null,
+      totals: 5,
   /*     finalResultGrizzly: null,
       finalResultPanda: null,
       finalResultPolar: null,
@@ -139,7 +140,8 @@ export default {
   },
 
     created() {
-      this.finalResult = this.total;
+      this.totals = this.createArrayOfTotals();
+      console.log("show me array", this.totals)
      /*  this.finalResultGrizzly = this.totalForGrizzly;
       this.finalResultPanda = this.totalForPanda;
       this.finalResultPolar = this.totalForPolar;
@@ -162,6 +164,23 @@ export default {
       })
       return this.votesConnectMe
     },
+
+    totalForGrizzly() {
+      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
+    },
+
+    totalForPanda() {
+       return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
+    },
+
+    totalForPolar() {
+       return this.frienderly[2].votes + this.connectMe[2].votes + this.quizPaw.polar 
+    },
+
+    totalForBlackBear() {
+       return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
+    },
+
 
     /* totalForGrizzly() {
       return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
@@ -242,15 +261,51 @@ export default {
       },
       addAVoteToBlackBear() {
         this.finalResultBlackBear++;
-      },
+      }
  */
-      addAVote(element) {
+      addAVote(bearName) {
+        this.totals = this.createArrayOfTotals();
+        console.log("array of totals", this.totals);      
+        console.log("THIS IS EL", bearName); 
       
-        this.frienderly.forEach(element => {
-          console.log("element", element)
-        
-          this.finalResult++;
+        this.totals.forEach(element => {
+            if (element.name === bearName) {
+              element.total++
+              console.log("element increased", element.total)
+            }
+          
+          
+          
         });
+      },
+
+      createArrayOfTotals() {
+         let totalForEachBear = [];
+
+         totalForEachBear.push(
+           {
+              name: "Grizzly",
+              total: this.totalForGrizzly
+            },
+            {
+              name: "Panda",
+              total: this.totalForPanda
+            },
+            {
+              name: "Polar",
+              total: this.totalForPolar
+            },
+            {
+              name: "Black Bear",
+              total: this.totalForBlackBear
+            });
+
+        /* totalForEachBear.push(this.totalForGrizzly, this.totalForPanda, this.totalForPolar, this.totalForBlackBear); */
+
+        this.totals = totalForEachBear
+
+      
+        return this.totals
       }
     }
 
