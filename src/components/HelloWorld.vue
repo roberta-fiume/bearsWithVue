@@ -129,7 +129,7 @@ export default {
       bearsNames: [],
       votesConnectMe: [],
       finalResult: null,
-      totals: 5,
+      totals: 0,
   /*     finalResultGrizzly: null,
       finalResultPanda: null,
       finalResultPolar: null,
@@ -180,6 +180,27 @@ export default {
     totalForBlackBear() {
        return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
     },
+
+    totalForEachBear() {
+      return [
+           {
+              name: "Grizzly",
+              total: this.totalForGrizzly
+            },
+            {
+              name: "Panda",
+              total: this.totalForPanda
+            },
+            {
+              name: "Polar",
+              total: this.totalForPolar
+            },
+            {
+              name: "Black Bear",
+              total: this.totalForBlackBear
+            }
+         ];
+    }
 
 
     /* totalForGrizzly() {
@@ -273,41 +294,18 @@ export default {
               element.total++
               console.log("element increased", element.total)
             }
-          
-          
-          
         });
       },
 
       createArrayOfTotals() {
-         let totalForEachBear = [];
+            /* totalForEachBear.push(this.totalForGrizzly, this.totalForPanda, this.totalForPolar, this.totalForBlackBear); */
+            this.totals = this.totalForEachBear;
 
-         totalForEachBear.push(
-           {
-              name: "Grizzly",
-              total: this.totalForGrizzly
-            },
-            {
-              name: "Panda",
-              total: this.totalForPanda
-            },
-            {
-              name: "Polar",
-              total: this.totalForPolar
-            },
-            {
-              name: "Black Bear",
-              total: this.totalForBlackBear
-            });
+            return this.totals
 
-        /* totalForEachBear.push(this.totalForGrizzly, this.totalForPanda, this.totalForPolar, this.totalForBlackBear); */
+        }  
 
-        this.totals = totalForEachBear
-
-      
-        return this.totals
       }
-    }
 
 
 }
