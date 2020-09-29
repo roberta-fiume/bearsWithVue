@@ -130,6 +130,7 @@ export default {
       votesConnectMe: [],
       finalResult: null,
       totals: 0,
+      groupedGrizzly: null
   /*     finalResultGrizzly: null,
       finalResultPanda: null,
       finalResultPolar: null,
@@ -141,7 +142,9 @@ export default {
 
     created() {
       this.totals = this.createArrayOfTotals();
-      console.log("show me array", this.totals)
+      console.log("show me array", this.totals);
+      const result = this.findGrizzly();
+      console.log(" this is result", result)
      /*  this.finalResultGrizzly = this.totalForGrizzly;
       this.finalResultPanda = this.totalForPanda;
       this.finalResultPolar = this.totalForPolar;
@@ -164,6 +167,8 @@ export default {
       })
       return this.votesConnectMe
     },
+
+   
 
     totalForGrizzly() {
       return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
@@ -200,7 +205,13 @@ export default {
               total: this.totalForBlackBear
             }
          ];
-    }
+      },
+
+    frienderlyAndConnectMeMerged() {
+     return  [...this.frienderly, ...this.connectMe];
+        
+    },
+
 
 
     /* totalForGrizzly() {
@@ -298,14 +309,46 @@ export default {
       },
 
       createArrayOfTotals() {
+
             /* totalForEachBear.push(this.totalForGrizzly, this.totalForPanda, this.totalForPolar, this.totalForBlackBear); */
             this.totals = this.totalForEachBear;
 
             return this.totals
 
-        }  
+        },
 
-      }
+    
+        groupByProperty(bear) {
+          return bear.option === "Grizzly";
+
+         /*  return objectArray.reduce(function (acc, obj) {
+            console.log("this is acc",acc);
+            console.log("this is objj", obj)
+          
+                    let key = obj[property];  
+                    console.log("this is keyy", key);
+                     if (!acc[key]) {
+                      acc[key] = []
+                    }
+                    acc[key].push(obj);
+                    return acc
+            ,
+                  }, {}) */
+          },
+
+          findGrizzly() {
+            console.log("this is my arrayyyyyyy", this.frienderlyAndConnectMeMerged)
+            return this.frienderlyAndConnectMeMerged.find(this.groupByProperty);
+            
+          }
+
+        
+        
+        
+
+      },
+
+     
 
 
 }
