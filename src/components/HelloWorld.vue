@@ -3,14 +3,6 @@
     <h1>WELCOME TO QUIZPAW!</h1>
 
     <h2>Best Bear quiz results:</h2>
-  
-    
-<!--     <div  class="bearsNames">
-      <p @click="addAVoteToGrizzly">{{this.frienderly[0].option}}</p>
-      <p @click="addAVoteToPanda">{{this.frienderly[1].option}}</p>
-      <p @click="addAVoteToPolar">{{this.frienderly[2].option}}</p>
-      <p @click="addAVoteToBlackBear">{{this.frienderly[3].option}}</p>
-    </div> -->
 
     <div  class="bearsNames">
       <p @click="addAVote(bearName.option)" v-for="bearName in frienderly" :key="bearName.option">{{bearName.option}}</p>
@@ -18,9 +10,6 @@
 
      <div  class="wrapperTotals">
       <p v-for="total in totals" :key="total.name"> TOTAL: {{total.total}}</p>
-    <!--   <p> TOTAL PANDA: </p>
-      <p> TOTAL POLAR: </p>
-      <p> TOTAL BLACK BEAR: </p> -->
     </div> 
 
     <div class="wrapperQuizPawResults">
@@ -37,37 +26,11 @@
     </div>  
       
     <div class="wrapperConnectMeVotes">
-      <div v-for="el in getVotesInConnectMe" :key="el">
-        <p>ConnectMe: {{el}}</p>
+      <div v-for="vote in getVotesInConnectMe" :key="vote">
+        <p>ConnectMe: {{vote}}</p>
       </div>
     </div>
    
-    <!-- <div class="wrapperTotals">
-      <p>TOTAL GRIZZLY: {{finalResultGrizzly}} </p>
-      <p>TOTAL PANDA: {{finalResultPanda}}</p>
-      <p>TOTAL POLAR: {{finalResultPolar}}</p>
-      <p>TOTAL BLACK BEAR: {{finalResultBlackBear}}</p>
-    </div>
-
-    <div class="wrapperQuizPawResults">
-      <p> QuizPaw: {{quizPaw.grizzly}}</p>
-      <p> QuizPaw: {{quizPaw.panda}}</p>
-      <p> QuizPaw: {{quizPaw.polar}}</p>
-      <p> QuizPaw: {{quizPaw.blackBear}}</p>    
-    </div>
-
-    <div  class="wrapperFrienderlyVotes">
-      <div v-for="vote in getVotesInFrienderly" :key="vote">
-        <p>Frienderly: {{vote}}</p>
-      </div>
-    </div>  
-      
-    <div class="wrapperConnectMeVotes">
-      <div v-for="el in getVotesInConnectMe" :key="el">
-        <p>ConnectMe: {{el}}</p>
-      </div>
-    </div -->
-    
     
   </div>
 </template>
@@ -130,29 +93,21 @@ export default {
       votesConnectMe: [],
       finalResult: null,
       totals: 0,
-      groupedGrizzly: null
-  /*     finalResultGrizzly: null,
-      finalResultPanda: null,
-      finalResultPolar: null,
-      finalResultBlackBear: null */
-      
+      groupedGrizzly: null 
     }
 
   },
 
     created() {
       this.totals = this.createArrayOfTotals();
-      console.log("show me array", this.totals);
-      let finalResult = this.removeDeplicates()
-      console.log("this is the resulttttt", finalResult)
-    
-     /*  this.finalResultGrizzly = this.totalForGrizzly;
-      this.finalResultPanda = this.totalForPanda;
-      this.finalResultPolar = this.totalForPolar;
-      this.finalResultBlackBear = this.totalForBlackBear; */
+      let finalResult = this.removeDeplicates();    
     },
 
   computed: {
+
+    frienderlyAndConnectMeMerged() {
+      return  [...this.frienderly, ...this.connectMe];   
+    },
     
     getVotesInFrienderly() {
       this.frienderly.filter(element => {
@@ -161,6 +116,7 @@ export default {
       })
       return this.votes
     },
+
     getVotesInConnectMe() {
        this.connectMe.filter(element => {
         this.votesConnectMe.push(element.votes);
@@ -169,22 +125,33 @@ export default {
       return this.votesConnectMe
     },
 
-   
-
+  
     totalForGrizzly() {
-      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
+      let finalResult = this.removeDeplicates();
+      const grizzlyTotal = finalResult.find( ({ option }) => option === "Grizzly" );
+
+      return grizzlyTotal.votes + this.quizPaw.grizzly   
     },
 
     totalForPanda() {
-       return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
+      let finalResult = this.removeDeplicates();
+      const pandaTotal = finalResult.find( ({ option }) => option === "Panda" );
+
+      return pandaTotal.votes + this.quizPaw.panda 
     },
 
     totalForPolar() {
-       return this.frienderly[2].votes + this.connectMe[2].votes + this.quizPaw.polar 
+      let finalResult = this.removeDeplicates();
+      const polarTotal = finalResult.find( ({ option }) => option === "Polar" );
+
+      return polarTotal.votes + this.quizPaw.polar 
     },
 
     totalForBlackBear() {
-       return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
+      let finalResult = this.removeDeplicates();
+      const blackBearTotal = finalResult.find( ({ option }) => option === "Black Bear" );
+
+      return blackBearTotal.votes + this.quizPaw.blackBear 
     },
 
     totalForEachBear() {
@@ -207,154 +174,50 @@ export default {
             }
          ];
       },
-
-    frienderlyAndConnectMeMerged() {
-     return  [...this.frienderly, ...this.connectMe];
-        
-    },
-
-
-
-    /* totalForGrizzly() {
-      return this.frienderly[0].votes + this.connectMe[0].votes + this.quizPaw.grizzly   
-    },
-
-    totalForPanda() {
-       return this.frienderly[1].votes + this.connectMe[1].votes + this.quizPaw.panda 
-    },
-
-    totalForPolar() {
-       return this.frienderly[2].votes + this.connectMe[2].votes + this.quizPaw.polar 
-    },
-
-    totalForBlackBear() {
-       return this.frienderly[3].votes + this.connectMe[3].votes + this.quizPaw.blackBear 
-    },
-
-    
-    resultForGrizzly: {
-        get() {
-          console.log("I'm calleddd get result")
-            return  this.finalResultGrizzly
-        },
-
-        set(newValue) {
-            this.finalResultGrizzly = newValue;
-            console.log("result grizzly", this.finalResultGrizzly) 
-       } 
-    }, 
-
-    resultForPanda: {
-      get() {
-        console.log("I'm calleddd get result")
-          return  this.finalResultPanda
-      },
-
-      set(newValue) {
-          this.finalResultPanda = newValue;
-          console.log("result panda", this.finalResultPanda) 
-      } 
-    }, 
-
-    resultForPolar: {
-      get() {
-        console.log("I'm calleddd get result")
-          return  this.finalResultPolar
-      },
-
-      set(newValue) {
-          this.finalResultPolar = newValue;
-          console.log("result polar", this.finalResultPolar) 
-      } 
-    },
-    
-    resultForBlackBear: {
-      get() {
-        console.log("I'm calleddd get result")
-          return  this.finalResultBlackBear
-      },
-
-      set(newValue) {
-          this.finalResultBlackBear = newValue;
-          console.log("result black bear", this.finalResultBlackBear) 
-      } 
-    },   */
-    
   },
 
     methods: {
-  /*     addAVoteToGrizzly() {  
-        this.finalResultGrizzly++;
-      },
-      addAVoteToPanda() {  
-        this.finalResultPanda++;
-      },
-      addAVoteToPolar() {  
-        this.finalResultPolar++;
-      },
-      addAVoteToBlackBear() {
-        this.finalResultBlackBear++;
-      }
- */
+
       addAVote(bearName) {
         this.totals = this.createArrayOfTotals();
-        console.log("array of totals", this.totals);      
-        console.log("THIS IS EL", bearName); 
-      
+        
         this.totals.forEach(element => {
             if (element.name === bearName) {
-              element.total++
-              console.log("element increased", element.total)
+              element.total++;
             }
         });
       },
 
       createArrayOfTotals() {
+        this.totals = this.totalForEachBear;
 
-            /* totalForEachBear.push(this.totalForGrizzly, this.totalForPanda, this.totalForPolar, this.totalForBlackBear); */
-            this.totals = this.totalForEachBear;
-
-            return this.totals
-
-        },
+        return this.totals
+      },
 
     
-        sumObjValuesWithsameKeys() {
-          let frienderlyAndConnectMe = this.frienderlyAndConnectMeMerged.reduce(function(acc, val) {
-            var o = acc.filter(function(obj){
-                return obj.option == val.option;
-            }).pop() || {option: val.option, votes:0};
+      sumObjValuesWithsameKeys() {
+        let frienderlyAndConnectMe = this.frienderlyAndConnectMeMerged.reduce(function(accumulator, currentValue) {
+          var object = accumulator.filter(function(obj){
+              return obj.option === currentValue.option;
+          }).pop() || {option: currentValue.option, votes: 0};
 
-            o.votes += val.votes;
-            acc.push(o);
-            return acc;
-          },[]);
+          object.votes += currentValue.votes;
+          accumulator.push(object);
+          return accumulator;
+        },[]);
 
-          return frienderlyAndConnectMe
-  
-        },
-
-        removeDeplicates() {
-          let frienderlyAndConnectMe = this.sumObjValuesWithsameKeys();
-
-          let finalResult = frienderlyAndConnectMe.filter(function(item, index, element) {
-                            return index == element.indexOf(item);
-                        });
-          console.log(finalResult);
-
-          return finalResult
-        }
-
-
-        
-        
-        
+        return frienderlyAndConnectMe
 
       },
 
-     
-
-
+      removeDeplicates() {
+        let frienderlyAndConnectMe = this.sumObjValuesWithsameKeys();
+        let finalResult = frienderlyAndConnectMe.filter(function(item, index, element) {
+                          return index === element.indexOf(item);
+                        });
+        return finalResult
+      }
+    },
 }
 </script>
 
