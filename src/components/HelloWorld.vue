@@ -143,8 +143,9 @@ export default {
     created() {
       this.totals = this.createArrayOfTotals();
       console.log("show me array", this.totals);
-      const result = this.findGrizzly();
-      console.log(" this is result", result)
+      let finalResult = this.removeDeplicates()
+      console.log("this is the resulttttt", finalResult)
+    
      /*  this.finalResultGrizzly = this.totalForGrizzly;
       this.finalResultPanda = this.totalForPanda;
       this.finalResultPolar = this.totalForPolar;
@@ -318,29 +319,32 @@ export default {
         },
 
     
-        groupByProperty(bear) {
-          return bear.option === "Grizzly";
+        sumObjValuesWithsameKeys() {
+          let frienderlyAndConnectMe = this.frienderlyAndConnectMeMerged.reduce(function(acc, val) {
+            var o = acc.filter(function(obj){
+                return obj.option == val.option;
+            }).pop() || {option: val.option, votes:0};
 
-         /*  return objectArray.reduce(function (acc, obj) {
-            console.log("this is acc",acc);
-            console.log("this is objj", obj)
-          
-                    let key = obj[property];  
-                    console.log("this is keyy", key);
-                     if (!acc[key]) {
-                      acc[key] = []
-                    }
-                    acc[key].push(obj);
-                    return acc
-            ,
-                  }, {}) */
-          },
+            o.votes += val.votes;
+            acc.push(o);
+            return acc;
+          },[]);
 
-          findGrizzly() {
-            console.log("this is my arrayyyyyyy", this.frienderlyAndConnectMeMerged)
-            return this.frienderlyAndConnectMeMerged.find(this.groupByProperty);
-            
-          }
+          return frienderlyAndConnectMe
+  
+        },
+
+        removeDeplicates() {
+          let frienderlyAndConnectMe = this.sumObjValuesWithsameKeys();
+
+          let finalResult = frienderlyAndConnectMe.filter(function(item, index, element) {
+                            return index == element.indexOf(item);
+                        });
+          console.log(finalResult);
+
+          return finalResult
+        }
+
 
         
         
